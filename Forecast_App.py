@@ -49,9 +49,9 @@ warnings.filterwarnings("ignore")
 # In[ ]:
 
 
-file_path_actual = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\ActualOrders.csv'
-file_path_forecast = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\ForecastedOrders.csv'
-file_path_Actual_SOP = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\S&OP and Actual Data Combined.csv'
+file_path_actual = 'S-OP\data\ActualOrders.csv'
+file_path_forecast = 'S-OP\data\ForecastedOrders.csv'
+file_path_Actual_SOP = 'S-OP\data\S&OP and Actual Data Combined.csv'
 
 df_actual = pd.read_csv(file_path_actual)
 df_forecast = pd.read_csv(file_path_forecast)
