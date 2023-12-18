@@ -49,9 +49,9 @@ warnings.filterwarnings("ignore")
 # In[ ]:
 
 
-file_path_actual = 'data/ActualOrders.csv'
-file_path_forecast = 'data/ForecastedOrders.csv'
-file_path_Actual_SOP = 'data/S&OP and Actual Data Combined.csv'
+file_path_actual = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\ActualOrders.csv'
+file_path_forecast = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\ForecastedOrders.csv'
+file_path_Actual_SOP = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\S&OP and Actual Data Combined.csv'
 
 df_actual = pd.read_csv(file_path_actual)
 df_forecast = pd.read_csv(file_path_forecast)
@@ -67,8 +67,8 @@ st.set_page_config(layout="wide")
 st.sidebar.header('Customer Name')
 customer_names = list(df_combined['Customer Name'].unique())
 customer_name = st.sidebar.selectbox('Select a Customer', customer_names) 
-holiday_effect = ["Yes","No"]
-holiday_effect = st.sidebar.selectbox('Holiday Effect', holiday_effect)
+# holiday_effect = ["Yes","No"]
+# holiday_effect = st.sidebar.selectbox('Holiday Effect', holiday_effect)
 start_date = st.sidebar.date_input("Start date", datetime.date(2022,7,1))
 end_date = st.sidebar.date_input("End date")
 
@@ -1030,25 +1030,25 @@ st.plotly_chart(fig)
 # In[ ]:
 
 
-if holiday_effect == "Yes":
-    st.title("🤖 Visualizing AI Prediction vs. S&OP Forecast - Future 8 Weeks (Holiday Effect)")
-    st.markdown("---")
+# if holiday_effect == "Yes":
+#     st.title("🤖 Visualizing AI Prediction vs. S&OP Forecast - Future 8 Weeks (Holiday Effect)")
+#     st.markdown("---")
 
-    merged_data = pd.merge(future_combined_results_formatted, df_for, left_index=True, right_index=True)
-    merged_data['Prophet Predictions'] = merged_data['Prophet Predictions'].str.split('(').str[0].astype(float)
+#     merged_data = pd.merge(future_combined_results_formatted, df_for, left_index=True, right_index=True)
+#     merged_data['Prophet Predictions'] = merged_data['Prophet Predictions'].str.split('(').str[0].astype(float)
 
-    fig = go.Figure()
+#     fig = go.Figure()
 
-    fig.add_trace(go.Scatter(x=merged_data['Week'], y=merged_data['Prophet Predictions'], mode='lines+markers', name='AI Prediction'))
-    fig.add_trace(go.Scatter(x=merged_data['Week'], y=merged_data['S&OP Forecast'], mode='lines+markers', name='S&OP Forecast'))
+#     fig.add_trace(go.Scatter(x=merged_data['Week'], y=merged_data['Prophet Predictions'], mode='lines+markers', name='AI Prediction'))
+#     fig.add_trace(go.Scatter(x=merged_data['Week'], y=merged_data['S&OP Forecast'], mode='lines+markers', name='S&OP Forecast'))
 
-    fig.update_layout(
-        title=f'AI Prediction vs. S&OP Forecast for {customer_name}',
-        xaxis_title='Week',
-        yaxis_title='Orders',
-        width=1000,
-        legend_title='Legend'
-    )
+#     fig.update_layout(
+#         title=f'AI Prediction vs. S&OP Forecast for {customer_name}',
+#         xaxis_title='Week',
+#         yaxis_title='Orders',
+#         width=1000,
+#         legend_title='Legend'
+#     )
 
-    st.plotly_chart(fig)
+#     st.plotly_chart(fig)
 
