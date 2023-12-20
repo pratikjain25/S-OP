@@ -262,65 +262,6 @@ df_am = df.copy()
 # In[ ]:
 
 
-# def ad_test(dataset):
-#      dftest = adfuller(dataset, autolag = 'AIC')
-#      print("1. ADF : ",dftest[0])
-#      print("2. P-Value : ", dftest[1])
-#      print("3. Num Of Lags : ", dftest[2])
-#      print("4. Num Of Observations Used For ADF Regression:", dftest[3])
-#      print("5. Critical Values :")
-#      for key, val in dftest[4].items():
-#          print("\t",key, ": ", val)
-# ad_test(df_am['Orders'])
-
-
-# In[ ]:
-
-
-# def find_best_differencing_order(dataset):
-#     dftest = adfuller(dataset, autolag='AIC')
-#     p_value = dftest[1]
-#     d = 1 if p_value > 0.05 else 0
-#     return d
-# d = find_best_differencing_order(df_am['Orders'])
-
-
-# In[ ]:
-
-
-# def find_best_pq_order(dataset):
-#     acf_vals = acf(dataset)
-#     pacf_vals = pacf(dataset)
-
-#     p = 0
-#     for lag in range(1, len(pacf_vals)):
-#         if pacf_vals[lag] < 0.05:
-#             p = lag
-#             break
-#     q = 0
-#     for lag in range(1, len(acf_vals)):
-#         if acf_vals[lag] < 0.05:
-#             q = lag
-#             break
-
-#     return p, q
-
-# p, q = find_best_pq_order(df_am['Orders'])
-
-
-# In[ ]:
-
-
-# fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 6))
-# acf_plot = plot_acf(df_am.Orders, lags=60, ax=ax1, alpha=0.05)
-# pacf_plot = plot_pacf(df_am.Orders, lags=60, ax=ax2, alpha=0.05)
-# plt.tight_layout()
-# plt.show()
-
-
-# In[ ]:
-
-
 # print(df_am.shape)
 train_am=df_am.iloc[:-8]
 test_am=df_am.iloc[-8:]
@@ -718,12 +659,12 @@ test_xg=df_xg.iloc[-9:]
 # In[ ]:
 
 
-tss = TimeSeriesSplit(n_splits=5, test_size=9)
+tss = TimeSeriesSplit(n_splits=3, test_size=9)
 
 reg = xgb.XGBRegressor(
     base_score=0.5,
     booster='gbtree',
-    n_estimators=1000,
+    n_estimators=500,
     early_stopping_rounds=50,
     objective='reg:linear',
     max_depth=3,
