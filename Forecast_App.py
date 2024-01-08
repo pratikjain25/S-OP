@@ -113,7 +113,7 @@ if customer_name:
     df_for = df_for[df_for['Customer Name'] == customer_name]
     df_for = df_for.groupby('Date')['S&OP Forecast'].sum().reset_index()
     df_for.set_index('Date', inplace=True)
-    df_for.index = pd.to_datetime(df_for.index) + timedelta(days=1)
+    df_for.index = pd.to_datetime(df_for.index)
     df_for.sort_index()
 else:
     df_for = df_forecast
@@ -121,7 +121,7 @@ else:
     df_for = df_for.sort_values(by=['Date'])
     df_for = df_for.groupby('Date')['S&OP Forecast'].sum().reset_index()
     df_for.set_index('Date', inplace=True)
-    df_for.index = pd.to_datetime(df_for.index) + timedelta(days=1)
+    df_for.index = pd.to_datetime(df_for.index)
     df_for.sort_index()
 
 
@@ -272,7 +272,7 @@ test_am=df_am.iloc[-8:]
 
 
 # model_am=sm.tsa.arima.ARIMA(train_am['Orders'],order=(p,d,q))
-model_am = pm.auto_arima(train_am['Orders'], seasonal=True, stepwise=False, approximation=False, trace=True)
+model_am = pm.auto_arima(train_am['Orders'], seasonal=False, stepwise=False, approximation=False, trace=True)
 model_am=model_am.fit(train_am['Orders'])
 # model_am.summary()
 
@@ -322,14 +322,14 @@ mape_am = mean_absolute_percentage_error(test_am['Orders'], pred_am)
 # In[ ]:
 
 
-results_am = pd.DataFrame({'Date': test_am.index, 'Actual Orders': test_am['Orders'], 'ARIMA Predictions': pred_am})
+results_am = pd.DataFrame({'Date': test_am.index, 'Actual Orders': test_am['Orders'], 'ARIMA Predictions': pred_am.values})
 # print(results_am)
 
 
 # In[ ]:
 
 
-model_am = pm.auto_arima(df_am['Orders'], seasonal=True, stepwise=False, approximation=False, trace=True)
+model_am = pm.auto_arima(df_am['Orders'], seasonal=False, stepwise=False, approximation=False, trace=True)
 model_am=model_am.fit(df_am['Orders'])
 # model_am.summary()
 
@@ -354,9 +354,9 @@ forecast_am = forecast_am.round()
 # In[ ]:
 
 
-future_am = pd.DataFrame({'ARIMA Predictions': forecast_am})
+future_am = pd.DataFrame({'Date':future_dates_am,'ARIMA Predictions': forecast_am.values})
 future_am['ARIMA Predictions'] = future_am['ARIMA Predictions'].apply(lambda x: f"{x} (±{mae_am:.0f})")
-future_am.index.name = 'Date'
+future_am.set_index('Date', inplace=True)
 # future_am
 
 
@@ -443,7 +443,7 @@ mape_exp = mean_absolute_percentage_error(test_exp['Orders'], y_pred_exp)
 # In[ ]:
 
 
-results_exp = pd.DataFrame({'Date': test_exp.index, 'Actual Orders': test_exp['Orders'], 'Exponential Smoothing Predictions':y_pred_exp})
+results_exp = pd.DataFrame({'Date': test_exp.index, 'Actual Orders': test_exp['Orders'], 'Exponential Smoothing Predictions':y_pred_exp.values})
 # results_exp
 
 
