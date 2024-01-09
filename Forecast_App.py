@@ -134,23 +134,23 @@ else:
 # In[ ]:
 
 
-if customer_name:
-    df_com = df_combined
-    df_com['Date'] = pd.to_datetime(df_com['Date'], format='%Y-%m-%d %H:%M:%S')
-    df_com = df_com.sort_values(by=['Date'])
-    df_com = df_com[df_com['Customer Name'] == customer_name]
-    df_com = df_com[(df_com['Date'] >= pd.to_datetime(start_date)) & (df_com['Date'] <= pd.to_datetime(end_date))]
-    df_com.set_index('Date', inplace=True)
-    df_com = df_com.sort_index()
-else:
-    df_com = df_combined
-    df_com['Date'] = pd.to_datetime(df_com['Date'], format='%Y-%m-%d %H:%M:%S')
-    df_com = df_com[(df_com['Date'] >= pd.to_datetime(start_date)) & (df_com['Date'] <= pd.to_datetime(end_date))]
-    df_com = df_com.sort_values(by=['Date'])
-    df_com.set_index('Date', inplace=True)
-    df_com = df_com.sort_index()
+# if customer_name:
+#     df_com = df_combined
+#     df_com['Date'] = pd.to_datetime(df_com['Date'], format='%Y-%m-%d %H:%M:%S')
+#     df_com = df_com.sort_values(by=['Date'])
+#     df_com = df_com[df_com['Customer Name'] == customer_name]
+#     df_com = df_com[(df_com['Date'] >= pd.to_datetime(start_date)) & (df_com['Date'] <= pd.to_datetime(end_date))]
+#     df_com.set_index('Date', inplace=True)
+#     df_com = df_com.sort_index()
+# else:
+#     df_com = df_combined
+#     df_com['Date'] = pd.to_datetime(df_com['Date'], format='%Y-%m-%d %H:%M:%S')
+#     df_com = df_com[(df_com['Date'] >= pd.to_datetime(start_date)) & (df_com['Date'] <= pd.to_datetime(end_date))]
+#     df_com = df_com.sort_values(by=['Date'])
+#     df_com.set_index('Date', inplace=True)
+#     df_com = df_com.sort_index()
 
-df_com = df_com.dropna()
+# df_com = df_com.dropna()
 
 
 # In[ ]:
