@@ -53,6 +53,10 @@ file_path_actual = r'data/ActualOrders.csv'
 file_path_forecast = r'data/ForecastedOrders.csv'
 file_path_Actual_SOP = r'data/S&OP and Actual Data Combined.csv'
 
+# file_path_actual = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\ActualOrders.csv'
+# file_path_forecast = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\ForecastedOrders.csv'
+# file_path_Actual_SOP = r'C:\Users\jainp\OneDrive - SGS&CO\S&OP\data\S&OP and Actual Data Combined.csv'
+
 df_actual = pd.read_csv(file_path_actual)
 df_forecast = pd.read_csv(file_path_forecast)
 df_combined = pd.read_csv(file_path_Actual_SOP)
@@ -69,8 +73,8 @@ customer_names = list(df_combined['Customer Name'].unique())
 customer_name = st.sidebar.selectbox('Select a Customer', customer_names) 
 # holiday_effect = ["Yes","No"]
 # holiday_effect = st.sidebar.selectbox('Holiday Effect', holiday_effect)
-start_date = st.sidebar.date_input("Start date", datetime.date(2022,7,1))
-end_date = st.sidebar.date_input("End date")
+# start_date = st.sidebar.date_input("Start date", datetime.date(2022,7,1))
+# end_date = st.sidebar.date_input("End date")
 
 
 # ### Actual Data
@@ -152,74 +156,74 @@ df_com = df_com.dropna()
 # In[ ]:
 
 
-mean_actual_orders = df_com['Actual Orders'].mean()
-total_actual_orders = df_com['Actual Orders'].sum()
-total_forecasted_orders = df_com['Forecast Orders'].sum()
-mae_kpi = mean_absolute_error(df_com['Actual Orders'], df_com['Forecast Orders'])
+# mean_actual_orders = df_com['Actual Orders'].mean()
+# total_actual_orders = df_com['Actual Orders'].sum()
+# total_forecasted_orders = df_com['Forecast Orders'].sum()
+# mae_kpi = mean_absolute_error(df_com['Actual Orders'], df_com['Forecast Orders'])
 
-def mean_absolute_percentage_error_data(actual_orders, forecast_orders):
-    actual_orders_masked = actual_orders.copy()
-    forecast_orders_masked = forecast_orders.copy()
+# def mean_absolute_percentage_error_data(actual_orders, forecast_orders):
+#     actual_orders_masked = actual_orders.copy()
+#     forecast_orders_masked = forecast_orders.copy()
 
-    mask = actual_orders != 0
-    actual_orders_masked[~mask] = 1
-    forecast_orders_masked[~mask] = 1
+#     mask = actual_orders != 0
+#     actual_orders_masked[~mask] = 1
+#     forecast_orders_masked[~mask] = 1
     
-    return np.mean(np.abs((actual_orders_masked - forecast_orders_masked) / actual_orders_masked)) * 100
+#     return np.mean(np.abs((actual_orders_masked - forecast_orders_masked) / actual_orders_masked)) * 100
 
-mape_kpi = mean_absolute_percentage_error_data(df_com['Actual Orders'], df_com['Forecast Orders'])
+# mape_kpi = mean_absolute_percentage_error_data(df_com['Actual Orders'], df_com['Forecast Orders'])
 
-mean_actual_orders = f"{mean_actual_orders:.2f}"
-mae_kpi = f"{mae_kpi:.2f}"
-mape_kpi = f"{mape_kpi:.2f}%"
+# mean_actual_orders = f"{mean_actual_orders:.2f}"
+# mae_kpi = f"{mae_kpi:.2f}"
+# mape_kpi = f"{mape_kpi:.2f}%"
 
-st.title(f'📉 Key Performance Indicators (KPIs) for {customer_name}')
-st.markdown("---")
+# st.title(f'📉 Key Performance Indicators (KPIs) for {customer_name}')
+# st.markdown("---")
 
-col1, col2, col3 = st.columns(3)
+# col1, col2, col3 = st.columns(3)
 
-with col1:
-    st.metric("Average Actual Orders", mean_actual_orders)
+# with col1:
+#     st.metric("Average Actual Orders", mean_actual_orders)
 
-with col2:
-    st.metric("Total Actual Orders", int(total_actual_orders))
+# with col2:
+#     st.metric("Total Actual Orders", int(total_actual_orders))
 
-with col3:
-    st.metric("Total S&OP Forecasted Orders", int(total_forecasted_orders))
+# with col3:
+#     st.metric("Total S&OP Forecasted Orders", int(total_forecasted_orders))
 
-col4, col5, col6 = st.columns(3)
+# col4, col5, col6 = st.columns(3)
 
-with col4:
-    st.metric("MAE (Actual vs. S&OP)", mae_kpi)
-    st.write("MAE (Mean Absolute Error) is the average of the absolute differences between actual and predicted values.")
+# with col4:
+#     st.metric("MAE (Actual vs. S&OP)", mae_kpi)
+#     st.write("MAE (Mean Absolute Error) is the average of the absolute differences between actual and predicted values.")
 
-with col5:
-    st.metric("MAPE (Actual vs. S&OP)", mape_kpi)
-    st.write("MAPE (Mean Absolute Percentage Error) measures the accuracy of a forecasting method by calculating the percentage difference between predicted and actual values.")
+# with col5:
+#     st.metric("MAPE (Actual vs. S&OP)", mape_kpi)
+#     st.write("MAPE (Mean Absolute Percentage Error) measures the accuracy of a forecasting method by calculating the percentage difference between predicted and actual values.")
 
-with col6:
-    pass
+# with col6:
+#     pass
 
 
 # In[ ]:
 
 
-st.title("📊 Visualizing Actual Orders vs S&OP Forecast")
-st.markdown("---")
+# st.title("📊 Visualizing Actual Orders vs S&OP Forecast")
+# st.markdown("---")
 
-fig = go.Figure()
+# fig = go.Figure()
 
-fig.add_trace(go.Scatter(x=df_com.index, y=df_com['Actual Orders'],mode='lines+markers', name='Actual Orders'))
+# fig.add_trace(go.Scatter(x=df_com.index, y=df_com['Actual Orders'],mode='lines+markers', name='Actual Orders'))
 
-fig.add_trace(go.Scatter(x=df_com.index, y=df_com['Forecast Orders'],mode='lines+markers', name='S&OP Forecast'))
+# fig.add_trace(go.Scatter(x=df_com.index, y=df_com['Forecast Orders'],mode='lines+markers', name='S&OP Forecast'))
 
-fig.update_layout(title=f'Actual Orders vs. S&OP Forecast for {customer_name}',
-                  xaxis_title='Date',
-                  yaxis_title='Orders',
-                  width=1000,
-                  legend_title='Legend')
+# fig.update_layout(title=f'Actual Orders vs. S&OP Forecast for {customer_name}',
+#                   xaxis_title='Date',
+#                   yaxis_title='Orders',
+#                   width=1000,
+#                   legend_title='Legend')
 
-st.plotly_chart(fig)
+# st.plotly_chart(fig)
 
 
 # ## Holiday Dataframe
@@ -272,7 +276,7 @@ test_am=df_am.iloc[-8:]
 
 
 # model_am=sm.tsa.arima.ARIMA(train_am['Orders'],order=(p,d,q))
-model_am = pm.auto_arima(train_am['Orders'], seasonal=False, stepwise=False, approximation=False, trace=True)
+model_am = pm.auto_arima(train_am['Orders']) # seasonal=False, stepwise=False, approximation=False, trace=True)
 model_am=model_am.fit(train_am['Orders'])
 # model_am.summary()
 
@@ -329,7 +333,7 @@ results_am = pd.DataFrame({'Date': test_am.index, 'Actual Orders': test_am['Orde
 # In[ ]:
 
 
-model_am = pm.auto_arima(df_am['Orders'], seasonal=False, stepwise=False, approximation=False, trace=True)
+model_am = pm.auto_arima(df_am['Orders']) # seasonal=False, stepwise=False, approximation=False, trace=True)
 model_am=model_am.fit(df_am['Orders'])
 # model_am.summary()
 
@@ -659,15 +663,15 @@ test_xg=df_xg.iloc[-9:]
 # In[ ]:
 
 
-tss = TimeSeriesSplit(n_splits=3, test_size=9)
+tss = TimeSeriesSplit(n_splits=2, test_size=9)
 
 reg = xgb.XGBRegressor(
     base_score=0.5,
     booster='gbtree',
-    n_estimators=500,
+    n_estimators=300,
     early_stopping_rounds=50,
     objective='reg:linear',
-    max_depth=3,
+    max_depth=2,
     learning_rate=0.01
 )
 
@@ -909,7 +913,7 @@ fig.add_trace(go.Scatter(x=combined_results['Week'], y=combined_results['S&OP Fo
 
 fig.update_layout(
     title=f'Actual Orders vs. AI Prediction vs. S&OP Forecast for {customer_name}',
-    xaxis_title='Date',
+    xaxis_title='Week',
     yaxis_title='Orders',
     legend_title='Legend',
     width=1000
